@@ -5,8 +5,13 @@ import Header from './Header';
 import Contact from './Contact';
 import Card from './Card';
 import Banner2 from './Banner2';
+import PopularMenu from './PopularMenu';
+import Testimonials from './TESTIMONIALS';
+import useAuth from '../../../hooks/useAuth';
 
 const Home = () => {
+    const { user } = useAuth()
+    console.log(user);
     return (
         <div className='font-inter'>
             <Banner></Banner>
@@ -24,6 +29,7 @@ const Home = () => {
                 <h3 className='text-center text-[#151515] text-4xl my-3'>FROM OUR MENU</h3>
                 <div className='border-b-2 w-64 mx-auto mb-3'></div>
             </div>
+            <PopularMenu></PopularMenu>
             <Contact></Contact>
             <div className='mt-8'>
                 <p className='text-xl text-center text-[#D99904] italic'> ---Should Try---</p>
@@ -33,6 +39,7 @@ const Home = () => {
             </div>
             <Card></Card>
             <Banner2></Banner2>
+            <Testimonials></Testimonials>
         </div>
 
     );

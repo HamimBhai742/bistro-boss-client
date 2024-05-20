@@ -1,9 +1,16 @@
 import React from 'react';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { GiShoppingCart } from 'react-icons/gi';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import img11 from '../../assets/others/profile.png'
 
 const Navbar = () => {
+    const { logOut, user } = useAuth()
+    const logOutUser = () => {
+        logOut()
+    }
+    console.log(user);
     return (
         <div className="navbar bg-[#15151580] text-white fixed z-10">
             <div className="navbar-start">
@@ -35,10 +42,13 @@ const Navbar = () => {
                         <NavLink className='text-lg font-bold' to='/contact-us'>CONTACT US</NavLink>
                         <NavLink className='text-lg font-bold' to='/dashboard'>DASHBOARD</NavLink>
                         <NavLink className='text-lg font-bold' to='/our-menu'>OUR MENU</NavLink>
-                        <NavLink className='text-lg font-bold flex items-center' to='/our-shop'>OUR SHOP <span className='text-2xl'><GiShoppingCart></GiShoppingCart></span></NavLink>
+                        <NavLink className='text-lg font-bold flex items-center' to='/our-shop/salad'>OUR SHOP <span className='text-2xl'><GiShoppingCart></GiShoppingCart></span></NavLink>
                     </ul>
                 </div>
-                <p className="flex items-center gap-3 w-36 text-lg font-bold">SIGN OUT <span className='text-4xl'><FaRegCircleUser></FaRegCircleUser></span></p>
+                <div className='flex items-center gap-2'>
+                    {user ? <button onClick={logOutUser} className=" text-lg font-bold uppercase">Sign Out</button> : <Link to='/login' className="text-lg font-bold uppercase">Sign In</Link>}
+                    <img className='w-12 h-12 rounded-full' src={user? user.photoURL: img11} alt="" />
+                </div>
             </div>
         </div>
     );
