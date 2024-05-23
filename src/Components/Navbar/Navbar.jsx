@@ -11,6 +11,9 @@ const Navbar = () => {
         logOut()
     }
     console.log(user);
+    const handelCartBtn=()=>{
+        console.log('cart');
+    }
     return (
         <div className="navbar bg-[#15151580] text-white fixed z-10">
             <div className="navbar-start">
@@ -42,12 +45,15 @@ const Navbar = () => {
                         <NavLink className='text-lg font-bold' to='/contact-us'>CONTACT US</NavLink>
                         <NavLink className='text-lg font-bold' to='/dashboard'>DASHBOARD</NavLink>
                         <NavLink className='text-lg font-bold' to='/our-menu'>OUR MENU</NavLink>
-                        <NavLink className='text-lg font-bold flex items-center' to='/our-shop/salad'>OUR SHOP <span className='text-2xl'><GiShoppingCart></GiShoppingCart></span></NavLink>
+                        <div className='flex items-center'>
+                            <NavLink className='text-lg font-bold flex items-center' to='/our-shop/salad'>OUR SHOP</NavLink>
+                            <button onClick={handelCartBtn} className='text-2xl flex'><GiShoppingCart></GiShoppingCart><small className='text-sm font-light'>99</small></button >
+                        </div>
                     </ul>
                 </div>
                 <div className='flex items-center gap-2'>
                     {user ? <button onClick={logOutUser} className=" text-lg font-bold uppercase">Sign Out</button> : <Link to='/login' className="text-lg font-bold uppercase">Sign In</Link>}
-                    <img className='w-12 h-12 rounded-full' src={user? user.photoURL: img11} alt="" />
+                    <img className='w-12 h-12 rounded-full' src={user ? user.photoURL : img11} alt="" />
                 </div>
             </div>
         </div>

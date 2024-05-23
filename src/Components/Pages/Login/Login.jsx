@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import img1 from '../../../assets/others/authentication1.png'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa6';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import useAuth from '../../../hooks/useAuth';
@@ -10,12 +10,15 @@ const Login = () => {
     const navigate = useNavigate()
     const [disabled, setDisabled] = useState(true)
     const captchatRef = useRef(null)
+    const location = useLocation()
+    console.log(location);
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
     const handelValidatedBtn = (e) => {
-        e.preventDefault()
-        const user_captcha_value = captchatRef.current.value;
+        // e.preventDefault()
+        const user_captcha_value = e.target.value;
+        console.log(user_captcha_value);
         console.log(user_captcha_value);
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false)
@@ -29,19 +32,19 @@ const Login = () => {
         const form = e.target
         const email = form.email.value
         const password = form.password.value
-        console.log(email,password);
+        console.log(email, password);
         userLogin(email, password)
             .then(res => {
                 console.log(res.user);
-                navigate('/')
+                navigate(location?.state ? location.state : '/')
             })
             .catch(error => {
                 console.log(error);
             })
     }
     return (
-        <div className='mx-12 mt-10 '>
-            <div className="hero bg-base-100 px-8 shadow-2xl rounded-lg">
+        <div className='m-12 mt-10 '>
+            <div className="hero bg-base-100 px-8 shadow-xl rounded-lg">
                 <div className="hero-content flex-col lg:flex-row ">
                     <div className="text-center lg:text-left">
                         <img className='w-[700px]' src={img1} alt="" />
@@ -68,14 +71,14 @@ const Login = () => {
                                 <label className="label" id='llss'>
                                     < LoadCanvasTemplate />
                                 </label>
-                                <input type="text" ref={captchatRef} placeholder="Type Here" name='captca' className="input input-bordered" />
-                                <button onClick={handelValidatedBtn} className='btn btn-outline my-3'>Validate</button>
+                                <input type="text" onBlur={handelValidatedBtn} placeholder="Type Here" name='captca' className="input input-bordered" />
+                                {/* <button onClick={handelValidatedBtn} className='btn btn-outline my-3'>Validate</button> */}
                             </div>
                             <div className="form-control mt-6">
                                 <button disabled={disabled} className="btn bg-[#D1A054] text-xl text-white font-bold">Sign In</button>
                             </div>
                         </form>
-                        <p className='text-[#D1A054] text-xl font-medium text-center'>New here? <Link to='/register' className='font-bold hover:underline'>Create a New Account</Link></p>
+                        <small><p className='text-[#D1A054] text-sm font-medium text-center '>New here? <Link to='/register' className='font-bold hover:underline'>Create a New Account</Link></p></small>
                         <p className='text-xl font-medium text-center mt-2'>Or sign in with</p>
                         <div className='text-3xl flex gap-12 justify-center mt-5 '>
                             <FaFacebook></FaFacebook>

@@ -1,7 +1,16 @@
 import React from 'react';
+import useAuth from '../../../hooks/useAuth';
 
 const OurCard = ({ item }) => {
     const { image, recipe, price, name } = item
+    const { user } = useAuth()
+    const handelAddToCartBtn = cart => {
+        console.log(cart);
+        cart.userName = user?.displayName
+        cart.userEmail = user?.email
+        console.log(cart);
+        ax
+    }
     return (
         <div>
             <div className="card w-96 bg-[#F3F3F3] font-inter relative">
@@ -13,7 +22,7 @@ const OurCard = ({ item }) => {
                     <h2 className="card-title text-2xl font-semibold">{name}</h2>
                     <p>{recipe.slice(0, 70)}...</p>
                     <div className="card-actions">
-                        <button className="btn bg-[#E8E8E8] border-b-2 border-b-[#BB8506] text-[#BB8506] uppercase">add to cart</button>
+                        <button onClick={() => handelAddToCartBtn(item)} className="btn bg-[#E8E8E8] border-b-2 border-b-[#BB8506] text-[#BB8506] uppercase">add to cart</button>
                     </div>
                 </div>
             </div>
