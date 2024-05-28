@@ -1,11 +1,13 @@
 import React from 'react';
-import useAuth from '../hooks/useAuth';
 import { Navigate, useLocation } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import useAdmin from '../hooks/useAdmin';
 
-const PrivateRoute = ({ children }) => {
+const AdminPrivate = ({ children }) => {
     const { user, loding } = useAuth()
+    const [isAdmin, isAdminLoding] = useAdmin()
     const location = useLocation()
-    if (loding) {
+    if (loding || isAdminLoding) {
         return <div className='min-h-screen flex justify-center items-center'>
             <span className="loading loading-bars loading-lg"></span>
             <span className="loading loading-bars loading-lg"></span>
@@ -17,11 +19,10 @@ const PrivateRoute = ({ children }) => {
             <span className="loading loading-bars loading-lg"></span>
         </div>
     }
-    if (user) {
+    if (user && isAdmin) {
         return children
     }
-
-     <Navigate to='/login' state={location.pathname}></Navigate>
+    return <Navigate to='/login' state={location.pathname}></Navigate>
 };
 
-export default PrivateRoute;
+export default AdminPrivate;

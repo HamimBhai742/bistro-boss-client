@@ -7,14 +7,17 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        cinzel:[ "Cinzel"],
-        inter:["Inter"],
-        raleway:["Raleway"]
+        cinzel: ["Cinzel"],
+        inter: ["Inter"],
+        raleway: ["Raleway"]
+      }
+    },
+    letterSpacing: {
+      widest: '7px'
     }
   },
-},
-plugins: [
-  require('daisyui'),
-],
+  plugins: [
+    require('daisyui'),
+  ],
 }
 

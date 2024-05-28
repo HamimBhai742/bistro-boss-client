@@ -4,6 +4,7 @@ import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import { updateProfile } from 'firebase/auth';
+import axios from 'axios';
 
 const Register = () => {
     const { userRegister } = useAuth()
@@ -16,14 +17,26 @@ const Register = () => {
         const photo = form.photo.value
         const password = form.password.value
         console.log(name, email, password);
+        const user = {
+            name,
+            email
+        }
         userRegister(email, password)
             .then(res => {
                 console.log(res.user);
                 updateProfile(res.user, {
                     displayName: name, photoURL: photo
                 })
-                form.reset()
-                navigate('/')
+                axios.post('http://localhost:5000/users', user)
+                    .then(res => {
+                        // console.log(res.data.insertedId);
+                        if (res.data.insertedId) {
+                            form.reset()
+                            navigate('/')
+                        }
+
+                    })
+
             })
             .catch(error => {
                 console.log(error);

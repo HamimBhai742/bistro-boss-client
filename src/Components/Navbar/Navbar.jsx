@@ -1,19 +1,27 @@
 import React from 'react';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { GiShoppingCart } from 'react-icons/gi';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import img11 from '../../assets/others/profile.png'
+import useCart from '../../hooks/useCart';
+import useAdmin from '../../hooks/useAdmin';
 
 const Navbar = () => {
+    const [cart] = useCart()
+    console.log(cart);
+    const [isAdmin] = useAdmin()
+    console.log(isAdmin, 'mmmmmmmmmmmmmmmmmm');
+    const navigate = useNavigate()
     const { logOut, user } = useAuth()
     const logOutUser = () => {
         logOut()
     }
     console.log(user);
-    const handelCartBtn=()=>{
-        console.log('cart');
+    const handelCartBtn = () => {
+        navigate('dasboard/my-cart')
     }
+
     return (
         <div className="navbar bg-[#15151580] text-white fixed z-10">
             <div className="navbar-start">
@@ -43,11 +51,11 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1 gap-3 font-inter ">
                         <NavLink className='text-lg font-bold' to='/'>HOME</NavLink>
                         <NavLink className='text-lg font-bold' to='/contact-us'>CONTACT US</NavLink>
-                        <NavLink className='text-lg font-bold' to='/dashboard'>DASHBOARD</NavLink>
+                        {isAdmin && <NavLink className='text-lg font-bold' to='dasboard'>DASHBOARD</NavLink>}
                         <NavLink className='text-lg font-bold' to='/our-menu'>OUR MENU</NavLink>
                         <div className='flex items-center'>
                             <NavLink className='text-lg font-bold flex items-center' to='/our-shop/salad'>OUR SHOP</NavLink>
-                            <button onClick={handelCartBtn} className='text-2xl flex'><GiShoppingCart></GiShoppingCart><small className='text-sm font-light'>99</small></button >
+                            <button onClick={handelCartBtn} className='text-2xl flex'><GiShoppingCart></GiShoppingCart><small className='text-sm font-light'>{cart?.length}</small></button >
                         </div>
                     </ul>
                 </div>

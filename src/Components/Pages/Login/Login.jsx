@@ -4,12 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa6';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import useAuth from '../../../hooks/useAuth';
+import axios from 'axios';
 
 const Login = () => {
-    const { userLogin } = useAuth()
+    const { userLogin, googleLoginUser } = useAuth()
+    console.log(userLogin);
     const navigate = useNavigate()
     const [disabled, setDisabled] = useState(true)
-    const captchatRef = useRef(null)
     const location = useLocation()
     console.log(location);
     useEffect(() => {
@@ -37,6 +38,29 @@ const Login = () => {
             .then(res => {
                 console.log(res.user);
                 navigate(location?.state ? location.state : '/')
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    const handelGoggleBtn = () => {
+        console.log('mmmm');
+        googleLoginUser()
+            .then(res => {
+                console.log(res.user);
+                const userInfo = {
+                    name: res.user?.displayName,
+                    email: res.user?.email
+                }
+                axios.post('http://localhost:5000/users', userInfo)
+                    .then(res => {
+                        console.log(res.data);
+                        navigate('/')
+                        // if (res.data.insertedId) {
+
+                        // }
+
+                    })
             })
             .catch(error => {
                 console.log(error);
@@ -82,7 +106,7 @@ const Login = () => {
                         <p className='text-xl font-medium text-center mt-2'>Or sign in with</p>
                         <div className='text-3xl flex gap-12 justify-center mt-5 '>
                             <FaFacebook></FaFacebook>
-                            <FaGoogle></FaGoogle>
+                            <button onClick={handelGoggleBtn}><FaGoogle></FaGoogle></button>
                             <FaGithub></FaGithub>
                         </div>
                     </div>

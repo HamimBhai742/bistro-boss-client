@@ -17,6 +17,18 @@
 background-attachment: fixed;
 }
 
+#das .active{
+  color: white;
+  font-weight: 700;
+}
+
+.cc{
+  border-radius: 12px;
+}
+
+.bgbtn{
+  background: linear-gradient(90deg, #835D23 0%, #B58130 100%);
+}
 /* .ourMenuBanner{
   background: url('./assets/menu/banner3.jpg');
 } */
