@@ -16,11 +16,11 @@ const OurMenu = () => {
     const soup = menus.filter(itm => itm.category === 'soup')
     const pizza = menus.filter(itm => itm.category === 'pizza')
     const salad = menus.filter(itm => itm.category === 'salad')
-    useEffect(() => {
-        fetch('http://localhost:5000/menu')
-            .then(res => res.json())
-            .then(data => {console.log(data)})
-}, [])
+//     useEffect(() => {
+//         fetch('http://localhost:5000/menu')
+//             .then(res => res.json())
+//             .then(data => {console.log(data)})
+// }, [])
 
 return (
     <div>

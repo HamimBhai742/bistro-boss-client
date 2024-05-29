@@ -2,20 +2,45 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import useMenu from "../../../hooks/useMenu";
 import { FaRegEdit } from "react-icons/fa";
 import useSucre from "../../../hooks/useSucre";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ManageItems = () => {
     const [menus, refetch] = useMenu()
     const axiosSucre = useSucre()
+    const navigate = useNavigate()
     const handelDeleteUser = async (id) => {
         console.log('object');
-        const res = await axiosSucre.delete(`/menu/${id}`)
-        console.log(res.data);
-        if (res.data.deletedCount > 0) {
-            refetch()
-        }
-    }
-    const handelUpdateUser = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You want to delete this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSucre.delete(`/menu/${id}`)
+                console.log(res.data);
+                if (res.data.deletedCount > 0) {
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your item has been deleted.",
+                        icon: "success"
+                    });
+                    refetch()
+                }
+            }
+        });
 
+        // console.log(res.data);
+        // if (res.data.deletedCount > 0) {
+        //     refetch()
+        // }
+    }
+    const handelUpdateUser = (id) => {
+        navigate(`/dasboard/manage-items/update-items/${id}`)
     }
     return (
         <div>

@@ -4,12 +4,14 @@ import { FaDeleteLeft } from 'react-icons/fa6';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const MyCart = () => {
     const [cart, refetch] = useCart()
     console.log(cart);
     const totalPrice = cart.reduce((total, item) => total + item.price, 0)
     console.log(totalPrice);
+    const navigaet = useNavigate()
     const handelMyCartDeleteBtn = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -37,6 +39,10 @@ const MyCart = () => {
         });
 
     }
+    const handelPaymentBtn = () => {
+        console.log('pay');
+        navigaet('/dasboard/reservation')
+    }
     return (
         <div>
             <div className='mt-5'>
@@ -49,7 +55,7 @@ const MyCart = () => {
                 <div className='font-cinzel flex justify-between'>
                     <h3 className='font-bold text-3xl'>Total orders: <span>{cart.length}</span></h3>
                     <h3 className='font-bold text-3xl'>total price: <span>${totalPrice}</span></h3>
-                    <button className=' bg-[#D1A054] text-white font-bold  text-xl px-3 py-2 rounded-md'>Pay</button>
+                    <button onClick={handelPaymentBtn} disabled={!cart.length} className='btn bg-[#D1A054] text-white font-bold  text-xl px-3 py-2 rounded-md'>Pay</button>
                 </div>
                 <div className="overflow-x-auto mt-5 font-inter">
                     <table className="table">

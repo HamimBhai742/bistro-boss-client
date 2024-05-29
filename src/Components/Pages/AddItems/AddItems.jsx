@@ -65,7 +65,7 @@ const AddItems = () => {
                             <div className="label">
                                 <span className="label-text font-inter text-xl font-semibold">Category*</span>
                             </div>
-                            <select defaultValue="Disabled" {...register("category")} className="select bg-white text-[#A1A1A1]">
+                            <select defaultValue="Disabled" {...register("category")} className="select bg-white">
                                 <option disabled selected value="Disabled" className='text-[#A1A1A1]'>Select Your Category</option>
                                 <option className='text-black' value="salad">Salad</option>
                                 <option className='text-black' value="pizza">Pizza</option>

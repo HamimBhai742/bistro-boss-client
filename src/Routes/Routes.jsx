@@ -13,6 +13,9 @@ import AllUsers from '../Components/Pages/AllUsers/AllUsers';
 import AddItems from '../Components/Pages/AddItems/AddItems';
 import AdminPrivate from '../PrivateRoute/AdminPrivate';
 import ManageItems from '../Components/Pages/ManageItems/ManageItems';
+import UpdateItem from '../Components/Pages/UpdateItem/UpdateItem';
+import Reservetion from '../Components/Pages/Reservetion/Reservetion';
+import PaymentHistory from '../Components/Pages/PaymentHistory/PaymentHistory';
 
 const router = createBrowserRouter([
   {
@@ -50,8 +53,17 @@ const router = createBrowserRouter([
         element: <MyCart></MyCart>
       },
       {
+        path: 'payment',
+        element: <PaymentHistory></PaymentHistory>
+      }
+      ,
+      {
+        path: 'reservation',
+        element: <Reservetion></Reservetion>
+      },
+      {
         path: 'all-users',
-        element: <AllUsers></AllUsers>
+        element: <AdminPrivate><AllUsers></AllUsers></AdminPrivate>
       },
       {
         path: 'add-items',
@@ -59,7 +71,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'manage-items',
-        element: <ManageItems></ManageItems>
+        element: <AdminPrivate><ManageItems></ManageItems></AdminPrivate>
+      },
+      {
+        path: 'manage-items/update-items/:id',
+        element: <AdminPrivate><UpdateItem></UpdateItem></AdminPrivate>
       }
     ]
   }
